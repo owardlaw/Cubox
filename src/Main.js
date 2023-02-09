@@ -172,7 +172,6 @@ function Main() {
 
 
   return (
-
     <div className="top-container">
       <h1>Scramble Generator</h1>
       <p>{scramble}</p>

@@ -11,24 +11,30 @@ const Table = () => {
 
     const recentTime = timeEntries.slice(-1)[0] || "-";
 
-    const timeAverageOf5 =
-        timeEntries.slice(-5).length === 5
-            ? timeEntries
-                .slice(-5)
-                .reduce((sum, entry) => sum + parseFloat(entry), 0) / 5
+    const timeAverageOf5 = (index) => {
+        let lastFive = timeEntries.slice(index, index + 5);
+        return lastFive.length === 5
+            ? lastFive.reduce((sum, entry) => sum + parseFloat(entry), 0) / 5
             : "-";
+    }
 
-    const timeAverageOf12 =
-        timeEntries.slice(-12).length === 12
-            ? timeEntries
-                .slice(-12)
-                .reduce((sum, entry) => sum + parseFloat(entry), 0) / 12
+    const timeAverageOf12 = (index) => {
+        let lastTwelve = timeEntries.slice(index, index + 12);
+        return lastTwelve.length === 12
+            ? lastTwelve.reduce((sum, entry) => sum + parseFloat(entry), 0) / 12
             : "-";
+    }
 
-    const timeEntriesToShow = timeEntries.slice(0, 5).reverse();
+    const timeEntriesToShow = timeEntries.slice(0, 5);
 
     return (
         <div>
+            <input
+                type="text"
+                value={userTime}
+                onChange={(e) => setUserTime(e.target.value)}
+            />
+            <button onClick={handleSubmit}>Submit</button>
             <table>
                 <thead>
                     <tr>
@@ -41,18 +47,12 @@ const Table = () => {
                     {timeEntriesToShow.map((entry, index) => (
                         <tr key={index}>
                             <td>{entry}</td>
-                            <td>{index === 0 ? timeAverageOf5 : "-"}</td>
-                            <td>{index === 0 ? timeAverageOf12 : "-"}</td>
+                            <td>{timeAverageOf5(index)}</td>
+                            <td>{timeAverageOf12(index)}</td>
                         </tr>
                     ))}
                 </tbody>
             </table>
-            <input
-                type="text"
-                value={userTime}
-                onChange={(e) => setUserTime(e.target.value)}
-            />
-            <button onClick={handleSubmit}>Submit</button>
         </div>
     );
 };

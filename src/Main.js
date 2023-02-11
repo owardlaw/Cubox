@@ -1,10 +1,11 @@
 import './Main.css';
 import React, { useState, useEffect } from "react";
+let times = [];
 
 function Main() {
 
+  const [recentTime, SetRecentTime] = useState(null);
   const [scramble, setCcramble] = useState(null);
-
   const moves = ['R', 'L', 'U', 'D', 'F', 'B'];
   const turns = ['', "'", '2'];
 
@@ -74,26 +75,75 @@ function Main() {
       minutes = '0' + String(minutes);
     }
 
+    // Prevent spacebar from scrolling page
+    document.addEventListener("keydown", function(event) {
+      if (event.code === "Space") {
+        event.preventDefault();
+      }
+    });
+    
+    // Spacebar event listener to control timer
     document.body.onkeyup = function (e) {
+      e.preventDefault();
       if (e.key == " " ||
         e.code == "Space" ||
         e.keyCode == 32
       ) {
         spacebarCount++;
-        console.log("Spacebar pressed")
         if (isRunning) {
           setIsRunning(false);
         } else {
           setIsRunning(true);
         }
 
-        if (spacebarCount == 2) {
+        if (spacebarCount == 3) {
           generateScramble();
           reset();
           spacebarCount = 0;
+          let time = minutes + ":" + seconds + "." + milliseconds;
+          times.push(time);
+          console.log(times)
+          SetRecentTime(time);
+          
         }
       }
     };
+
+    // Table of times
+    const TableTimes = ({ addTime }) => {
+      const [times, setTimes] = useState([
+        "00:00",
+        "01:00",
+        "02:00",
+        "03:00",
+        "04:00",
+      ]);
+    
+      return (
+        <div>
+          <table>
+            <thead>
+              <tr>
+                <th>Time</th>
+              </tr>
+            </thead>
+            <tbody>
+              {times.map((time, index) => (
+                <tr key={index}>
+                  <td>{time}</td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+          <button onClick={() => addTime("05:00")}>Add Time</button>
+        </div>
+      );
+    };
+    
+    const addTime = (newTime) => {
+      // code to add time goes here
+    };
+    
 
     return (
       <div className="timer">
@@ -112,65 +162,6 @@ function Main() {
     );
   };
 
-  // Table 
-  const Table = () => {
-    const [timeEntries, setTimeEntries] = useState([]);
-    const [userTime, setUserTime] = useState("");
-
-    const handleSubmit = () => {
-      setTimeEntries([Number(userTime).toFixed(3), ...timeEntries.slice(0, 4)]);
-      setUserTime("");
-    };
-
-    const recentTime = timeEntries.slice(-1)[0] || "-";
-
-    const timeAverageOf5 = (index) => {
-      let lastFive = timeEntries.slice(index, index + 5);
-      return lastFive.length === 5
-        ? lastFive.reduce((sum, entry) => sum + parseFloat(entry), 0) / 5
-        : "-";
-    }
-
-    const timeAverageOf12 = (index) => {
-      let lastTwelve = timeEntries.slice(index, index + 12);
-      return lastTwelve.length === 12
-        ? lastTwelve.reduce((sum, entry) => sum + parseFloat(entry), 0) / 12
-        : "-";
-    }
-
-    const timeEntriesToShow = timeEntries.slice(0, 5);
-
-    return (
-      <div>
-        <input
-          type="text"
-          value={userTime}
-          onChange={(e) => setUserTime(e.target.value)}
-        />
-        <button onClick={handleSubmit}>Submit</button>
-        <table>
-          <thead>
-            <tr>
-              <th>Time</th>
-              <th>ao5</th>
-              <th>ao12</th>
-            </tr>
-          </thead>
-          <tbody>
-            {timeEntriesToShow.map((entry, index) => (
-              <tr key={index}>
-                <td>{entry}</td>
-                <td>{timeAverageOf5(index)}</td>
-                <td>{timeAverageOf12(index)}</td>
-              </tr>
-            ))}
-          </tbody>
-        </table>
-      </div>
-    );
-  };
-
-
   return (
     <div className="top-container">
       <h1>Scramble Generator</h1>
@@ -180,14 +171,12 @@ function Main() {
       <div className="grid-container">
 
         <div className="left-grid">
-          <Table className="left-container" />
+          <TableTimes />
         </div>
 
         <div className="right-grid">
           <p> Right area</p>
           <Timer className="right-container" />
-
-
         </ div>
 
       </div>

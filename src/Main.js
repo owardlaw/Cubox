@@ -1,13 +1,15 @@
 import './Main.css';
 import React, { useState, useEffect } from "react";
+
+// This simulates the data I want to display in the table
 let times = [];
 
 function Main() {
 
-  const [recentTime, SetRecentTime] = useState(null);
   const [scramble, setCcramble] = useState(null);
   const moves = ['R', 'L', 'U', 'D', 'F', 'B'];
   const turns = ['', "'", '2'];
+  const [times, setTimes] = useState([]);
 
   function generateScramble() {
     let scramble = [];
@@ -27,8 +29,29 @@ function Main() {
     generateScramble()
   }, []);
 
-  // Timer
+  // Updating table 
+  const Table = ({ times }) => {
+    return (
+      <table>
+        <thead>
+          <tr>
+            <th>Time</th>
+          </tr>
+        </thead>
+        <tbody>
+          {times.map((time, index) => (
+            <tr key={index}>
+              <td>{time}</td>
+            </tr>
+          ))}
+        </tbody>
+      </table>
+    );
+  };
 
+
+
+  // Timer
   // Global spacebar count variable
   let spacebarCount = 0;
 
@@ -81,6 +104,7 @@ function Main() {
         event.preventDefault();
       }
     });
+
     
     // Spacebar event listener to control timer
     document.body.onkeyup = function (e) {
@@ -89,6 +113,10 @@ function Main() {
         e.code == "Space" ||
         e.keyCode == 32
       ) {
+
+        let time = minutes + ":" + seconds + "." + milliseconds;
+
+
         spacebarCount++;
         if (isRunning) {
           setIsRunning(false);
@@ -96,55 +124,20 @@ function Main() {
           setIsRunning(true);
         }
 
-        if (spacebarCount == 3) {
+        if (spacebarCount == 2) {
+          setTimes([...times, time]);
           generateScramble();
+        }
+
+        if (spacebarCount == 3) {
           reset();
           spacebarCount = 0;
-          let time = minutes + ":" + seconds + "." + milliseconds;
           times.push(time);
-          console.log(times)
-          SetRecentTime(time);
-          
+    
         }
       }
     };
-
-    // Table of times
-    const TableTimes = ({ addTime }) => {
-      const [times, setTimes] = useState([
-        "00:00",
-        "01:00",
-        "02:00",
-        "03:00",
-        "04:00",
-      ]);
-    
-      return (
-        <div>
-          <table>
-            <thead>
-              <tr>
-                <th>Time</th>
-              </tr>
-            </thead>
-            <tbody>
-              {times.map((time, index) => (
-                <tr key={index}>
-                  <td>{time}</td>
-                </tr>
-              ))}
-            </tbody>
-          </table>
-          <button onClick={() => addTime("05:00")}>Add Time</button>
-        </div>
-      );
-    };
-    
-    const addTime = (newTime) => {
-      // code to add time goes here
-    };
-    
-
+ 
     return (
       <div className="timer">
         <h1>Timer</h1>
@@ -171,7 +164,8 @@ function Main() {
       <div className="grid-container">
 
         <div className="left-grid">
-          <TableTimes />
+          {/* This is the area I want the table to be added to */}
+          <Table times={times} />
         </div>
 
         <div className="right-grid">

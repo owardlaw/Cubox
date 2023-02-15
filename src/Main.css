@@ -2,6 +2,8 @@
   font-family: 'Roboto', sans-serif;
   font-size: 15px;
   font-weight: 600;
+  background-color: #4c5265;
+  color: rgb(207, 207, 207);
 }
 
 .top-container {
@@ -10,7 +12,7 @@
 
 .grid-container {
   display: grid;
-  grid-template-columns: 18% 82%;
+  grid-template-columns: 33% 77%;
   grid-template-rows: auto;
 }
 
@@ -23,7 +25,42 @@
 
 .right-grid {
   text-align: center;
+  margin-right: 55%;
+  margin-top: 10%;
   grid-column: 2 / 3;
   min-height: 100vh;
   color: rgb(0, 0, 0);
+}
+
+
+.solve-stats {
+  text-align: center;
+  justify-content: center;
+  align-items: center;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+#clock {
+  font-size: 60px;
+}
+
+.chart {
+  padding-top: 40px;
+  height: 300px;
+  width: max-content;
+}
+
+
+.header {
+  text-align: center;
+  font-size: 70px;
+  font-weight: 600;
+  padding-top: 20px;
+}
+
+#scramble {
+  font-size: 30px;
+  font-weight: 600;
+  padding-top: 20px;
 }

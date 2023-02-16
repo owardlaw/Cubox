@@ -1,4 +1,4 @@
-# ![plot](public/favicon-32x32.png)ubox
+# ![plot](public/logo.png)
 
 A modern speed cubing timer with built in analytics and predictive measurements!
 

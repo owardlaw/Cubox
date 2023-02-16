@@ -1,6 +1,5 @@
 import React from "react";
 import formatTime from "./FormatTime";
-import LineChart from "./LineChart";
 
 const Table = ({ times }) => {
     let minTime = "--:--.---";
@@ -72,10 +71,6 @@ const Table = ({ times }) => {
                         ))}
                     </tbody>
                 </table>
-            </div>
-
-            <div className="chart">
-                <LineChart data={times} />
             </div>
         </div>
     );

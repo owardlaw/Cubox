@@ -173,7 +173,12 @@ function Main() {
             event={cube}
             visualization="3D"
           ></scramble-display>
+
+          <div className="chart">
+            <LineChart data={times} />
+          </div>
         </div>
+        
       </div>
     </div>
   );

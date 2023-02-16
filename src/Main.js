@@ -3,31 +3,38 @@ import React, { useState, useRef } from "react";
 import LineChart from "./components/LineChart";
 import formatTime from "./components/FormatTime";
 import Table from "./components/Table";
+import { randomScrambleForEvent } from 'https://cdn.cubing.net/js/cubing/scramble';
+import { ScrambleDisplay } from "scramble-display"
 
 function Main() {
 
   const [scramble, setCcramble] = useState(null);
-  const moves = ['R', 'L', 'U', 'D', 'F', 'B'];
-  const turns = ['', "'", '2'];
   const [times, setTimes] = useState([]);
+  const [cube, setCube] = useState("333");
 
-  function generateScramble() {
-    let scramble = [];
-    for (let i = 0; i < 20; i++) {
-      let move = moves[Math.floor(Math.random() * moves.length)];
-      let turn = turns[Math.floor(Math.random() * turns.length)];
-      scramble.push(move + turn);
-    }
-    // Setting state to new scamble
-    setCcramble(scramble.join(' '))
+  const twoByTwo = "222";
+  const threeByThree = "333";
+  const threeByThreeBf = "333bf";
+  const threeByThreeFm = "333fm";
+  const threeByThreeOh = "333oh";
+  const fourByFour = "444";
+  const fiveByFive = "555";
+  const sixBySix = "666";
+  const sevenBySeven = "777";
+  const sq1 = "sq1";
+  const megaminx = "minx";
+  const clock = "clock";
 
+  const generateScramble = async (cube) => {
+    const newScramble = await randomScrambleForEvent(cube);
+    setCcramble(newScramble.toString());
   };
 
   // Init scramble on startup
   React.useEffect(() => {
-
-    generateScramble()
+    generateScramble(cube)
   }, []);
+
 
   // Format time: UNIX to MM:SS:MS
   const formatTime = (unixTime) => {
@@ -106,7 +113,7 @@ function Main() {
 
         if (spacebarCount == 3) {
           handleReset();
-          generateScramble();
+          generateScramble(cube);
           spacebarCount = 0;
         }
       }
@@ -117,30 +124,56 @@ function Main() {
         <div className="timer">
           <p id="clock">{formatTime(time)}</p>
         </div>
-        <button onClick={handleStart}>Start</button>
-        <button onClick={handlePause}>Pause</button>
-        <button onClick={handleReset}>Reset</button>
       </div>
     );
   };
+
+  function changeCube(cube) {
+    setCube(cube);
+    generateScramble(cube);
+  }
 
   return (
     <div className="top-container">
 
       <div className='header'>
         <p id="scramble">{scramble}</p>
+        <div>
+          <button id="scramble-buttons" onClick={() => changeCube(twoByTwo)}>2x2</button>
+          <button id="scramble-buttons" onClick={() => changeCube(threeByThree)}>3x3</button>
+          <button id="scramble-buttons" onClick={() => changeCube(fourByFour)}>4x4</button>
+          <button id="scramble-buttons" onClick={() => changeCube(fiveByFive)}>5x5</button>
+          <button id="scramble-buttons" onClick={() => changeCube(sixBySix)}>6x6</button>
+          <button id="scramble-buttons" onClick={() => changeCube(sevenBySeven)}>7x7</button>
+          <button id="scramble-buttons" onClick={() => changeCube(sq1)}>Sq1</button>
+          <button id="scramble-buttons" onClick={() => changeCube(megaminx)}>Pyraminx</button>
+          <button id="scramble-buttons" onClick={() => changeCube(clock)}>Clock</button>
+          <button id="scramble-buttons" onClick={() => changeCube(threeByThreeFm)}>3x3 fm</button>
+          <button id="scramble-buttons" onClick={() => changeCube(threeByThreeBf)}>3x3 bf</button>
+          <button id="scramble-buttons" onClick={() => changeCube(threeByThreeOh)}>3x3 oh</button>
+        </div>
+        <div>
+          <button id="scramble-buttons" onClick={() => generateScramble(cube)}>Next Scramble</button>
+        </div>
       </div>
 
       <div className="grid-container">
-
         <div className="left-grid">
           <Table times={times} />
         </div>
 
-        <div className="right-grid">
+        <div className="middle-grid">
           <Timer />
-          <button id="rescramble" onClick={generateScramble}>Re Scramble</button>
-        </ div>
+        </div>
+
+        <div className="right-grid">
+        <scramble-display
+            id="scramble-display"
+            scramble={scramble}
+            event={cube}
+            visualization="3D"
+          ></scramble-display>   
+      </div>  
       </div>
     </div>
   );

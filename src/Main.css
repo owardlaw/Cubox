@@ -2,17 +2,28 @@
   font-family: 'Roboto', sans-serif;
   font-size: 15px;
   font-weight: 600;
-  background-color: #4c5265;
   color: rgb(207, 207, 207);
+}
+
+#table-font {
+  font-size: 18px;
+}
+
+.header {
+  background-color: #242726;;
+  color: rgb(207, 207, 207);
+  padding-bottom: 30px;
 }
 
 .top-container {
   text-align: center;
+  background-color: #2e3233;
 }
 
 .grid-container {
+  margin-top: 20px;
   display: grid;
-  grid-template-columns: 33% 77%;
+  grid-template-columns: 1fr 2fr 1fr;
   grid-template-rows: auto;
 }
 
@@ -23,11 +34,16 @@
   flex-direction: column;
 }
 
-.right-grid {
+.middle-grid {
   text-align: center;
-  margin-right: 55%;
   margin-top: 10%;
   grid-column: 2 / 3;
+  min-height: 100vh;
+  color: rgb(0, 0, 0);
+}
+
+.right-grid {
+  grid-column: 3 / 4;
   min-height: 100vh;
   color: rgb(0, 0, 0);
 }
@@ -42,7 +58,7 @@
 }
 
 #clock {
-  font-size: 60px;
+  font-size: 100px;
 }
 
 .chart {
@@ -67,4 +83,15 @@
 
 #times-displayed {
   margin-top: 20px;
+}
+
+#scramble-display {
+  margin-right: auto;
+  margin-left: auto;
+}
+
+#scramble-buttons {
+  margin-top: 5px;
+  color: rgb(0, 0, 0);
+  background-color: rgb(207, 207, 207);
 }

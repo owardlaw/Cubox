@@ -16,7 +16,7 @@ const Table = ({ times }) => {
         averageTime = formatTime(times.reduce((a, b) => a + b) / times.length);
 
     }
-    
+
     if (times.length >= 5) {
         ao5 = formatTime(times.slice(-5).reduce((acc, cur) => acc + cur, 0) - Math.min(...times.slice(-5)) - Math.max(...times.slice(-5)) / 3);
     }
@@ -26,30 +26,30 @@ const Table = ({ times }) => {
     }
 
     // Only show last 10 times
-    const amountofTimesShown = 15;
+    const amountofTimesShown = 12;
     const lastTenTimes = times.slice(-amountofTimesShown).reverse();
 
     return (
 
         <div className="solve-stats">
             <table className="solve-stats">
-                <tbody>
+                <tbody className="table-font">
                     <tr>
-                        <th>Best Time: {minTime}</th>
+                        <th id="table-font">Best Time: {minTime}</th>
                     </tr>
                     <tr>
-                        <th>Best ao5: {ao5}</th>
+                        <th id="table-font">Best ao5: {ao5}</th>
                     </tr>
                     <tr>
-                        <th>Best ao12: {ao12}</th>
+                        <th id="table-font">Best ao12: {ao12}</th>
                     </tr>
                     <tr>
-                        <th>Total avg: {averageTime}</th>
+                        <th id="table-font">Total avg: {averageTime}</th>
                     </tr >
                 </tbody>
                 <thead>
                     <tr>
-                        <th>Completed Solves: {totalCompletedSolves}</th>
+                        <th id="table-font">Completed Solves: {totalCompletedSolves}</th>
                     </tr>
                 </thead>
             </table>
@@ -57,7 +57,7 @@ const Table = ({ times }) => {
             <table className="solve-stats" id="times-displayed">
                 <tbody>
                     {lastTenTimes.map((time, index) => (
-                        <tr key={index}>
+                        <tr id="table-font" key={index}>
                             <td>{formatTime(time)}</td>
                         </tr>
                     ))}

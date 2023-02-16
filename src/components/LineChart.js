@@ -45,17 +45,22 @@ const LineChart = ({ data }) => {
     plugins: {
       legend: {
         display: false
+      },
+      title: {
+        display: false,
       }
     },
     scales: {
       x: {
         ticks: {
           color: 'white', // set color of x ticks
+          display: false,
         },
       },
       y: {
         ticks: {
           color: 'white', // set color of y ticks
+          display: false,
         },
       },
     },

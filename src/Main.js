@@ -167,13 +167,13 @@ function Main() {
         </div>
 
         <div className="right-grid">
-        <scramble-display
+          <scramble-display
             id="scramble-display"
             scramble={scramble}
             event={cube}
             visualization="3D"
-          ></scramble-display>   
-      </div>  
+          ></scramble-display>
+        </div>
       </div>
     </div>
   );

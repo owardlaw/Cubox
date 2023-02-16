@@ -1,5 +1,5 @@
 * {
-  font-family: 'Roboto', sans-serif;
+  font-family: 'Courier', sans-serif;
   font-size: 15px;
   font-weight: 600;
   color: rgb(207, 207, 207);
@@ -9,8 +9,14 @@
   font-size: 18px;
 }
 
+#index-text {
+  font-size: 16px;
+  color: rgb(145, 145, 145);
+  padding-right: 15px;
+}
+
 .header {
-  background-color: #242726;;
+  background-color: #242726;
   color: rgb(207, 207, 207);
   padding-bottom: 30px;
 }
@@ -48,13 +54,46 @@
   color: rgb(0, 0, 0);
 }
 
-
 .solve-stats {
   text-align: center;
   justify-content: center;
   align-items: center;
   margin-left: auto;
   margin-right: auto;
+}
+
+.scroll-table {
+  overflow-x: hidden;
+  overflow-y: auto;
+  height: 300px;
+  width: 100%;
+}
+
+.scroll-table::-webkit-scrollbar {
+  width: 8px;
+}
+
+.scroll-table::-webkit-scrollbar-thumb {
+  background-color: #ccc;
+  border-radius: 10px;
+  border: 2px solid #eee;
+}
+
+.scroll-table::-webkit-scrollbar-thumb::before {
+  content: "";
+  display: block;
+  height: 30px;
+  width: 30px;
+  background-color: #333;
+  border-radius: 50%;
+  position: absolute;
+  left: 0;
+  top: 0;
+  transform: translate(-50%, -50%);
+}
+
+.scroll-table::-webkit-scrollbar-thumb:hover::before {
+  background-color: #666;
 }
 
 #clock {
@@ -64,9 +103,8 @@
 .chart {
   padding-top: 40px;
   height: 300px;
-  width: max-content;
+  width: 100%;
 }
-
 
 .header {
   text-align: center;

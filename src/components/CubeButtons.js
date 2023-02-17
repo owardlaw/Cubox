@@ -1,6 +1,6 @@
 import React from "react";
 
-const CubeButtons = ({ setCube, generateScramble }) => {
+const CubeButtons = (props) => {
 
   const twoByTwo = "222";
   const threeByThree = "333";
@@ -16,8 +16,8 @@ const CubeButtons = ({ setCube, generateScramble }) => {
   const clock = "clock";
 
   function changeCube(cube) {
-    setCube(cube);
-    generateScramble(cube);
+    props.setCube(cube);
+    props.generateScramble(cube, props.setCcramble);
   }
 
   return (

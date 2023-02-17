@@ -24,9 +24,9 @@ function Main() {
 
       <div className='header'>
         <p id="scramble">{scramble}</p>
-        <CubeButtons setCube={setCube} generateScramble={generateScramble} />
+        <CubeButtons setCube={setCube} generateScramble={generateScramble} setCcramble={setCcramble}/>
         <div>
-          <button id="scramble-buttons" onClick={() => generateScramble(cube)}>Next Scramble</button>
+          <button id="scramble-buttons" onClick={() => generateScramble(cube, setCcramble)}>Next Scramble</button>
         </div>
       </div>
 
@@ -36,7 +36,7 @@ function Main() {
         </div>
 
         <div className="middle-grid">
-          <Timer />
+          <Timer cube={cube} times={times} setTimes={setTimes} setCcramble={setCcramble} generateScramble={generateScramble}/>
         </div>
 
         <div className="right-grid">

@@ -6,7 +6,7 @@ import generateScramble from "./GenerateScramble";
 // Global spacebar count variable
 let spacebarCount = 0;
 
-const Timer = (cube, times) => {
+const Timer = (props) => {
     const [isRunning, setIsRunning] = useState(false);
     const [time, setTime] = useState(0);
     const intervalRef = useRef();
@@ -62,14 +62,13 @@ const Timer = (cube, times) => {
             }
 
             if (spacebarCount == 2) {
-                times.push(time);
-                console.log(time);
+                props.setTimes([...props.times, time]);
                 handlePause();
             }
 
             if (spacebarCount == 3) {
                 handleReset();
-                generateScramble(cube);
+                props.generateScramble(props.cube, props.setCcramble);
                 spacebarCount = 0;
             }
         }

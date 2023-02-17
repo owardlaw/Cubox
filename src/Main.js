@@ -6,6 +6,7 @@ import Table from "./components/Table";
 import Timer from "./components/Timer";
 import CubeButtons from './components/CubeButtons';
 import generateScramble from './components/GenerateScramble';
+import TimeTracker from './components/TimeTracker';
 
 function Main() {
 
@@ -37,6 +38,7 @@ function Main() {
 
         <div className="middle-grid">
           <Timer cube={cube} times={times} setTimes={setTimes} setCcramble={setCcramble} generateScramble={generateScramble}/>
+          <TimeTracker times={times} setTimes={setTimes}/>
         </div>
 
         <div className="right-grid">

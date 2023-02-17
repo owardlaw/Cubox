@@ -1,10 +1,13 @@
 import './Main.css';
-import React, { useState, useRef } from "react";
+import React, { useState, useRef, useEffect } from "react";
 import LineChart from "./components/LineChart";
 import formatTime from "./components/FormatTime";
 import Table from "./components/Table";
-import { randomScrambleForEvent } from 'https://cdn.cubing.net/js/cubing/scramble';
-import { ScrambleDisplay } from "scramble-display"
+import Timer from "./components/Timer";
+import CubeButtons from './components/CubeButtons';
+import generateScramble from './components/GenerateScramble';
+import { openDB } from 'idb';
+
 
 function Main() {
 
@@ -12,158 +15,71 @@ function Main() {
   const [times, setTimes] = useState([]);
   const [cube, setCube] = useState("333");
 
-  const twoByTwo = "222";
-  const threeByThree = "333";
-  const threeByThreeBf = "333bf";
-  const threeByThreeFm = "333fm";
-  const threeByThreeOh = "333oh";
-  const fourByFour = "444";
-  const fiveByFive = "555";
-  const sixBySix = "666";
-  const sevenBySeven = "777";
-  const sq1 = "sq1";
-  const megaminx = "minx";
-  const clock = "clock";
-
-  const generateScramble = async (cube) => {
-    const newScramble = await randomScrambleForEvent(cube);
-    setCcramble(newScramble.toString());
-  };
-
   // Init scramble on startup
   React.useEffect(() => {
-    generateScramble(cube)
+    generateScramble(cube, setCcramble)
   }, []);
-
-
-  // Format time: UNIX to MM:SS:MS
-  const formatTime = (unixTime) => {
-    const date = new Date(unixTime);
-    const minutes = date.getUTCMinutes().toString().padStart(2, '0');
-    const seconds = date.getUTCSeconds().toString().padStart(2, '0');
-    const milliseconds = date.getUTCMilliseconds().toString().padStart(3, '0');
-    return `${minutes}:${seconds}.${milliseconds}`;
-  };
-
-
-  // Timer
-  // Global spacebar count variable
-  let spacebarCount = 0;
-
-  const Timer = () => {
-    const [isRunning, setIsRunning] = useState(false);
-    const [time, setTime] = useState(0);
-    const intervalRef = useRef();
-
-    const handleStart = () => {
-      if (!isRunning) {
-        setIsRunning(true);
-        intervalRef.current = setInterval(() => {
-          setTime((prevTime) => prevTime + 10);
-        }, 10);
+  
+    useEffect(() => {
+      // Open the database and get all times
+      async function getTimes() {
+        const db = await openDB('time-tracker', 1, {
+          upgrade(db) {
+            db.createObjectStore('times', { keyPath: 'id', autoIncrement: true });
+          },
+        });
+        const times = await db.getAll('times');
+  
+        // convert all db times to ints or set to null if not possible
+        const intTimes = times.map((time) => {
+          const parsedTime = parseInt(time.time, 10);
+          return isNaN(parsedTime) ? null : parsedTime;
+        });
+  
+        setTimes(intTimes);
       }
+  
+      getTimes();
+    }, []);
+  
+     async function addTime(time) {
+      // Add a new time to the database with the array index as the key
+      const db = await openDB('time-tracker', 1);
+      const tx = db.transaction('times', 'readwrite');
+      const store = tx.objectStore('times');
+      const index = times.length; // get the current length of the array as the key
+      await store.add({ id: index, time }); // include the index as the key
+      // setTimes([...times, { id: index, time }]); // include the new item in the state
+    }
+  
+    // Delete all times 
+    async function deleteTimes() {
+      const db = await openDB('time-tracker', 1);
+      const tx = db.transaction('times', 'readwrite');
+      const store = tx.objectStore('times');
+      await store.clear();
+      setTimes([]);
     };
-
-    const handlePause = () => {
-      if (isRunning) {
-        setIsRunning(false);
-        clearInterval(intervalRef.current);
-      }
-    };
-
-    const handleReset = () => {
-      setIsRunning(false);
-      clearInterval(intervalRef.current);
-      setTime(0);
-    };
-
-    // Prevent spacebar from scrolling page
-    document.addEventListener("keydown", function (event) {
-      if (event.code === "Space") {
-        event.preventDefault();
-      }
-    });
-
-
-    // Spacebar event listener to control timer
-    document.body.onkeyup = function (e) {
-      e.preventDefault();
-      if (e.key == " " ||
-        e.code == "Space" ||
-        e.keyCode == 32
-      ) {
-
-        spacebarCount++;
-
-        if (isRunning) {
-          setIsRunning(false);
-        } else {
-          setIsRunning(true);
-        }
-
-        if (spacebarCount == 1) {
-          handleStart();
-        }
-
-        if (spacebarCount == 2) {
-          times.push(time);
-          console.log(time);
-          handlePause();
-        }
-
-        if (spacebarCount == 3) {
-          handleReset();
-          generateScramble(cube);
-          spacebarCount = 0;
-        }
-      }
-    };
-
-    return (
-      <div>
-        <div className="timer">
-          <p id="clock">{formatTime(time)}</p>
-        </div>
-      </div>
-    );
-  };
-
-  function changeCube(cube) {
-    setCube(cube);
-    generateScramble(cube);
-  }
+  
 
   return (
     <div className="top-container">
 
       <div className='header'>
         <p id="scramble">{scramble}</p>
+        <CubeButtons setCube={setCube} generateScramble={generateScramble} setCcramble={setCcramble}/>
         <div>
-          <button id="scramble-buttons" onClick={() => changeCube(twoByTwo)}>2x2</button>
-          <button id="scramble-buttons" onClick={() => changeCube(threeByThree)}>3x3</button>
-          <button id="scramble-buttons" onClick={() => changeCube(fourByFour)}>4x4</button>
-          <button id="scramble-buttons" onClick={() => changeCube(fiveByFive)}>5x5</button>
-          <button id="scramble-buttons" onClick={() => changeCube(sixBySix)}>6x6</button>
-          <button id="scramble-buttons" onClick={() => changeCube(sevenBySeven)}>7x7</button>
-          <button id="scramble-buttons" onClick={() => changeCube(sq1)}>Sq1</button>
-          <button id="scramble-buttons" onClick={() => changeCube(megaminx)}>Pyraminx</button>
-          <button id="scramble-buttons" onClick={() => changeCube(clock)}>Clock</button>
-          <button id="scramble-buttons" onClick={() => changeCube(threeByThreeFm)}>3x3 fm</button>
-          <button id="scramble-buttons" onClick={() => changeCube(threeByThreeBf)}>3x3 bf</button>
-          <button id="scramble-buttons" onClick={() => changeCube(threeByThreeOh)}>3x3 oh</button>
-        </div>
-        <div>
-          <button id="scramble-buttons" onClick={() => generateScramble(cube)}>Next Scramble</button>
+          <button id="scramble-buttons" onClick={() => generateScramble(cube, setCcramble)}>Next Scramble</button>
         </div>
       </div>
 
       <div className="grid-container">
         <div className="left-grid">
-          <Table times={times} />
+          <Table times={times} deleteTimes={deleteTimes}/>
         </div>
 
         <div className="middle-grid">
-          <Timer />
+          <Timer cube={cube} times={times} setTimes={setTimes} setCcramble={setCcramble} generateScramble={generateScramble}  addTime={addTime}/>
         </div>
 
         <div className="right-grid">

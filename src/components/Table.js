@@ -1,7 +1,7 @@
 import React from "react";
 import formatTime from "./FormatTime";
 
-const Table = ({ times }) => {
+const Table = ({ times, deleteTimes }) => {
     let minTime = "--:--.---";
     let averageTime = "--:--.---";
     let ao5 = "--:--.---";
@@ -59,6 +59,8 @@ const Table = ({ times }) => {
                     </tr>
                 </thead>
             </table>
+
+            <button id="scramble-buttons" onClick={deleteTimes}>Clear All Times</button>
 
             <div className="scroll-table">
                 <table className="solve-stats" id="times-displayed">

@@ -24,11 +24,11 @@ function TimeTracker(props) {
       setDbTimes(intTimes);
       props.setTimes(intTimes);
     }
-    
+
     getTimes();
   }, []);
 
-  async function addTime(time) {
+   async function addTime(time) {
     // Add a new time to the database with the array index as the key
     const db = await openDB('time-tracker', 1);
     const tx = db.transaction('times', 'readwrite');

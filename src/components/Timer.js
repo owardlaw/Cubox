@@ -63,6 +63,7 @@ const Timer = (props) => {
 
             if (spacebarCount == 2) {
                 props.setTimes([...props.times, time]);
+                props.addTime(time);
                 handlePause();
             }
 

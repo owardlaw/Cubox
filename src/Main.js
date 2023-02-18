@@ -1,12 +1,12 @@
 import './Main.css';
 import React, { useState, useRef, useEffect } from "react";
 import LineChart from "./components/LineChart";
-import formatTime from "./components/FormatTime";
 import Table from "./components/Table";
 import Timer from "./components/Timer";
 import CubeButtons from './components/CubeButtons';
 import generateScramble from './components/GenerateScramble';
 import { openDB } from 'idb';
+import { ScrambleDisplay } from "scramble-display"
 
 
 function Main() {
@@ -89,7 +89,6 @@ function Main() {
             event={cube}
             visualization="3D"
           ></scramble-display>
-
           <div className="chart">
             <LineChart data={times} />
           </div>

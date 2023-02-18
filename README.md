@@ -13,6 +13,6 @@ Scramble regulations follow [WCA regulations](https://www.worldcubeassociation.o
     - total average
     - best ao5
     - best ao12
-
+- Client side storage (indexeddb)
 
 

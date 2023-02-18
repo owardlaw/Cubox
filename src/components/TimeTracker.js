@@ -1,6 +1,5 @@
 import { openDB } from 'idb';
 import React, { useState, useEffect } from 'react';
-import formatTime from './FormatTime';
 
 function TimeTracker(props) {
   const [dbTimes, setDbTimes] = useState([]);

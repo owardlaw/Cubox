@@ -6,7 +6,7 @@ import Timer from "./components/Timer";
 import CubeButtons from './components/CubeButtons';
 import generateScramble from './components/GenerateScramble';
 import { openDB } from 'idb';
-import { ScrambleDisplay } from "scramble-display"
+// import { ScrambleDisplay } from "scramble-display"
 
 
 function Main() {
@@ -88,12 +88,12 @@ function Main() {
         </div>
 
         <div className="right-grid">
-          <scramble-display
+          {/* <scramble-display
             id="scramble-display"
             scramble={scramble}
             event={cube}
             visualization="3D"
-          ></scramble-display>
+          ></scramble-display> */}
           <div className="chart">
             <LineChart data={times} />
           </div>

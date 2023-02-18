@@ -8,6 +8,8 @@ const Table = ({ times, deleteTimes }) => {
     let ao12 = "--:--.---";
     let totalCompletedSolves = times.length;
 
+    const [bestAo5, setBestAo5] = React.useState("--:--.---");
+
     if (times.length !== 0) {
         minTime = formatTime(Math.min(...times));
         averageTime = formatTime(
@@ -16,21 +18,28 @@ const Table = ({ times, deleteTimes }) => {
     }
 
     if (times.length >= 5) {
-        ao5 = formatTime(
-            times
-                .slice(-5)
-                .reduce((acc, cur) => acc + cur, 0) -
-            (Math.min(...times.slice(-5)) + Math.max(...times.slice(-5))) / 3
-        );
+        const last5Solves = times.slice(-5);
+        const minSolve = Math.min(...last5Solves);
+        const maxSolve = Math.max(...last5Solves);
+        const sumWithoutMinMax = last5Solves.reduce((acc, cur) => acc + cur, 0) - minSolve - maxSolve;
+        ao5 = formatTime(sumWithoutMinMax / 3);
+
+        if (bestAo5 === "--:--.---") {
+            setBestAo5(ao5);
+        } else {
+
+            if (ao5 < bestAo5) {
+                setBestAo5(ao5);
+            }
+        }
     }
 
     if (times.length >= 12) {
-        ao12 = formatTime(
-            times
-                .slice(-12)
-                .reduce((acc, cur) => acc + cur, 0) -
-            (Math.min(...times.slice(-12)) + Math.max(...times.slice(-12))) / 10
-        );
+        const last12Solves = times.slice(-12);
+        const minSolve = Math.min(...last12Solves);
+        const maxSolve = Math.max(...last12Solves);
+        const sumWithoutMinMax = last12Solves.reduce((acc, cur) => acc + cur, 0) - minSolve - maxSolve;
+        ao12 = formatTime(sumWithoutMinMax / 10);
     }
 
     const amountOfTimesShown = times.length;
@@ -44,10 +53,13 @@ const Table = ({ times, deleteTimes }) => {
                         <th id="table-font">Best Time: {minTime}</th>
                     </tr>
                     <tr>
-                        <th id="table-font">Best ao5: {ao5}</th>
+                        <th id="table-font">Current ao5: {ao5}</th>
                     </tr>
                     <tr>
-                        <th id="table-font">Best ao12: {ao12}</th>
+                        <th id="table-font">BEST ao5: {bestAo5}</th>
+                    </tr>
+                    <tr>
+                        <th id="table-font">Current ao12: {ao12}</th>
                     </tr>
                     <tr>
                         <th id="table-font">Total avg: {averageTime}</th>

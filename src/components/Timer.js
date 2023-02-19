@@ -42,34 +42,22 @@ const Timer = (props) => {
     // Prevent spacebar from scrolling page
     document.body.onkeydown = function (e) {
         e.preventDefault();
-
-
         if (
             e.code == "Space" && lastPress === 0
         ) {
             lastPress = 1;
-
-            console.log("down");
-
             if (spacebarDown == 0) {
                 spacebarDown = 1;
-                console.log("spacebarDown = 1");
                 setTimerColor(red);
-
             } else if (spacebarDown == 1) {
                 spacebarDown = 2;
-                console.log("spacebarDown = 2");
                 props.setTimes([...props.times, time]);
                 props.addTime(time);
                 handlePause();
                 setTimerColor("");
-
             } else if (spacebarDown == 2) {
                 spacebarDown = 0;
-                console.log("spacebarDown = 0");
             }
-
-            console.log(spacebarDown);
         }
     };
 
@@ -82,7 +70,6 @@ const Timer = (props) => {
             e.keyCode == 32 && lastPress === 1
         ) {
             lastPress = 0;
-            console.log("up");
             spacebarCount++;
 
             if (isRunning) {

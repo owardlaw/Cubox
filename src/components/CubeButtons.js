@@ -1,19 +1,15 @@
-import React from "react";
+import React, { useState } from "react";
 
 const CubeButtons = (props) => {
 
-  const twoByTwo = "222";
-  const threeByThree = "333";
-  const threeByThreeBf = "333bf";
-  const threeByThreeFm = "333fm";
-  const threeByThreeOh = "333oh";
-  const fourByFour = "444";
-  const fiveByFive = "555";
-  const sixBySix = "666";
-  const sevenBySeven = "777";
-  const sq1 = "sq1";
-  const megaminx = "minx";
-  const clock = "clock";
+  const [value, setValue] = useState('333');
+
+  const handleChange = (event) => {
+
+    setValue(event.target.value);
+    changeCube(event.target.value);
+
+  };
 
   function changeCube(cube) {
     props.setCube(cube);
@@ -22,18 +18,22 @@ const CubeButtons = (props) => {
 
   return (
     <div>
-      <button id="scramble-buttons" onClick={() => changeCube(twoByTwo)}>2x2</button>
-      <button id="scramble-buttons" onClick={() => changeCube(threeByThree)}>3x3</button>
-      <button id="scramble-buttons" onClick={() => changeCube(fourByFour)}>4x4</button>
-      <button id="scramble-buttons" onClick={() => changeCube(fiveByFive)}>5x5</button>
-      <button id="scramble-buttons" onClick={() => changeCube(sixBySix)}>6x6</button>
-      <button id="scramble-buttons" onClick={() => changeCube(sevenBySeven)}>7x7</button>
-      <button id="scramble-buttons" onClick={() => changeCube(sq1)}>Sq1</button>
-      <button id="scramble-buttons" onClick={() => changeCube(megaminx)}>Megaminx</button>
-      <button id="scramble-buttons" onClick={() => changeCube(clock)}>Clock</button>
-      <button id="scramble-buttons" onClick={() => changeCube(threeByThreeFm)}>3x3 fm</button>
-      <button id="scramble-buttons" onClick={() => changeCube(threeByThreeBf)}>3x3 bf</button>
-      <button id="scramble-buttons" onClick={() => changeCube(threeByThreeOh)}>3x3 oh</button>
+      <select id="scramble-buttons" value={value} onChange={handleChange}>
+        <option id="scramble-buttons" value="222">2x2</option>
+        <option id="scramble-buttons" value="333">3x3</option>
+        <option id="scramble-buttons" value="444">4x4</option>
+        <option id="scramble-buttons" value="555">5x5</option>
+        <option id="scramble-buttons" value="666">6x6</option>
+        <option id="scramble-buttons" value="777">7x7</option>
+        <option id="scramble-buttons" value="sq1">Sq1</option>
+        <option id="scramble-buttons" value="minx">Megaminx</option>
+        <option id="scramble-buttons" value="clock">Clock</option>
+        <option id="scramble-buttons" value="333fm">3x3 fm</option>
+        <option id="scramble-buttons" value="333bf">3x3 bf</option>
+        <option id="scramble-buttons" value="333oh">3x3 oh</option>
+      </select>
+      <button id="scramble-buttons" onClick={() => props.generateScramble(value, props.setCcramble)}>Next Scramble</button>
+      <button id="scramble-buttons" onClick={props.deleteLastTime}>Delete Last Time</button>
     </div>
   );
 }

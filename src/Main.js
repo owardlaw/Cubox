@@ -47,14 +47,36 @@ function Main() {
     getTimes();
   }, [cube]);
 
+  // Add a time to the database
   async function addTime(time) {
-    // Add a new time to the database with the array index as the key
     const db = await openDB(dbName, 1);
     const tx = db.transaction(dbObjectStore, 'readwrite');
     const store = tx.objectStore(dbObjectStore);
-    const index = times.length; // get the current length of the array as the key
+    const index = Math.floor(Math.random() * 1000000); // generate a random key
     await store.add({ id: index, time }); // include the index as the key
+    const times = await db.getAll(dbObjectStore);
+    const intTimes = times.map((time) => {
+      const parsedTime = parseInt(time.time, 10);
+      return isNaN(parsedTime) ? null : parsedTime;
+    });
+    setTimes(intTimes);
   }
+
+  // Delete the last time recorded
+  async function deleteLastTime() {
+    const db = await openDB(dbName, 1);
+    const tx = db.transaction(dbObjectStore, 'readwrite');
+    const store = tx.objectStore(dbObjectStore);
+    const key = await store.getAllKeys();
+    await store.delete(key[key.length - 1]); // remove the last time object
+    const times = await db.getAll(dbObjectStore);
+    const intTimes = times.map((time) => {
+      const parsedTime = parseInt(time.time, 10);
+      return isNaN(parsedTime) ? null : parsedTime;
+    });
+    setTimes(intTimes);
+  }
+
 
   // Delete all times 
   async function deleteTimes() {
@@ -65,14 +87,13 @@ function Main() {
     setTimes([]);
   };
 
+
   return (
     <div className="top-container">
       <div className='header'>
         <p id="scramble">{scramble}</p>
-        <CubeButtons setCube={setCube} generateScramble={generateScramble} setCcramble={setCcramble} />
-        <div>
-          <button id="scramble-buttons" onClick={() => generateScramble(cube, setCcramble)}>Next Scramble</button>
-        </div>
+        <CubeButtons cube={cube} setCube={setCube} generateScramble={generateScramble} setCcramble={setCcramble} deleteLastTime={deleteLastTime} />
+
       </div>
       <div className="grid-container">
         <div className="left-grid">
@@ -82,14 +103,16 @@ function Main() {
           <Timer cube={cube} times={times} setTimes={setTimes} setCcramble={setCcramble} generateScramble={generateScramble} addTime={addTime} />
         </div>
         <div className="right-grid">
-          <scramble-display
-            id="scramble-display"
-            scramble={scramble}
-            event={cube}
-            visualization="3D"
-          ></scramble-display>
-          <div className="chart">
-            <LineChart data={times} />
+          <div className='graph-cube-container'>
+            <scramble-display
+              id="scramble-display"
+              scramble={scramble}
+              event={cube}
+              visualization="3D"
+            ></scramble-display>
+            <div className="chart">
+              <LineChart data={times} />
+            </div>
           </div>
         </div>
       </div>

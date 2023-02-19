@@ -26,6 +26,26 @@
   background-color: #2e3233;
 }
 
+.stats-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  grid-template-rows: auto;
+}
+
+.pb-titles {
+  text-align: left;
+  font-size: 20px;
+  color: #afafaf;
+  font-weight: 600;
+}
+
+.pb-text {
+  text-align: center;
+  font-size: 18px;
+  font-weight: 600;
+}
+
+
 .grid-container {
   margin-top: 20px;
   display: grid;
@@ -54,8 +74,16 @@
   color: rgb(0, 0, 0);
 }
 
+.graph-cube-container {
+  background-color: #242726;
+  padding: 10px;
+}
+
 .solve-stats {
+  padding: 10px;
+  width: 90%;
   text-align: center;
+  background-color: #242726;
   justify-content: center;
   align-items: center;
   margin-left: auto;
@@ -63,9 +91,11 @@
 }
 
 .scroll-table {
+  background-color: #242726;
+  padding-top: 20px;
   overflow-x: hidden;
   overflow-y: auto;
-  height: 420px;
+  height: 300px;
   width: 100%;
 }
 
@@ -130,8 +160,9 @@
 
 #scramble-buttons {
   margin-top: 5px;
-  color: rgb(0, 0, 0);
-  background-color: rgb(207, 207, 207);
+  color: rgb(207, 207, 207);
+  background-color: #505050;
+  margin: 5px;
 }
 
 .buffer-div {

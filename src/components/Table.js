@@ -1,17 +1,32 @@
 import React from "react";
 import formatTime from "./FormatTime";
+import Box from '@mui/system/Box';
+import Grid from '@mui/system/Unstable_Grid';
+import styled from '@mui/system/styled';
+
+const Item = styled('div')(({ theme }) => ({
+    backgroundColor: "#2e3233",
+    // border: '1px solid #2e3233',
+    borderColor: theme.palette.mode === 'dark' ? '#444d58' : '#ced7e0',
+    padding: theme.spacing(1),
+    borderRadius: '4px',
+    color: "rgb(207, 207, 207)",
+}));
 
 const Table = ({ times, deleteTimes }) => {
-    let minTime = "--:--.---";
-    let averageTime = "--:--.---";
-    let ao5 = "--:--.---";
-    let ao12 = "--:--.---";
+    let minTime = "";
+    let maxTime = "";
+    let averageTime = "";
+    let ao5 = "";
+    let ao12 = "";
     let totalCompletedSolves = times.length;
 
-    const [bestAo5, setBestAo5] = React.useState("--:--.---");
+    const [bestAo5, setBestAo5] = React.useState(null);
+    const [bestAo12, setBestAo12] = React.useState(null);
 
     if (times.length !== 0) {
         minTime = formatTime(Math.min(...times));
+        maxTime = formatTime(Math.max(...times));
         averageTime = formatTime(
             times.reduce((a, b) => a + b) / times.length
         );
@@ -24,12 +39,29 @@ const Table = ({ times, deleteTimes }) => {
         const sumWithoutMinMax = last5Solves.reduce((acc, cur) => acc + cur, 0) - minSolve - maxSolve;
         ao5 = formatTime(sumWithoutMinMax / 3);
 
-        if (bestAo5 === "--:--.---") {
+        if (bestAo5 === null) {
             setBestAo5(ao5);
         } else {
 
             if (ao5 < bestAo5) {
                 setBestAo5(ao5);
+            }
+        }
+    }
+
+    if (times.length >= 12) {
+        const last5Solves = times.slice(-12);
+        const minSolve = Math.min(...last5Solves);
+        const maxSolve = Math.max(...last5Solves);
+        const sumWithoutMinMax = last5Solves.reduce((acc, cur) => acc + cur, 0) - minSolve - maxSolve;
+        ao12 = formatTime(sumWithoutMinMax / 10);
+
+        if (bestAo12 === null) {
+            setBestAo12(ao12);
+        } else {
+
+            if (ao5 < bestAo5) {
+                setBestAo12(ao12);
             }
         }
     }
@@ -47,30 +79,35 @@ const Table = ({ times, deleteTimes }) => {
 
     return (
         <div className="solve-stats">
-            <table className="solve-stats">
-                <tbody className="table-font">
-                    <tr>
-                        <th id="table-font">Best Time: {minTime}</th>
-                    </tr>
-                    <tr>
-                        <th id="table-font">Current ao5: {ao5}</th>
-                    </tr>
-                    <tr>
-                        <th id="table-font">BEST ao5: {bestAo5}</th>
-                    </tr>
-                    <tr>
-                        <th id="table-font">Current ao12: {ao12}</th>
-                    </tr>
-                    <tr>
-                        <th id="table-font">Total avg: {averageTime}</th>
-                    </tr>
-                </tbody>
-                <thead>
-                    <tr>
-                        <th id="table-font">Completed Solves: {totalCompletedSolves}</th>
-                    </tr>
-                </thead>
-            </table>
+
+            <Grid container spacing={1} className="stats-grid">
+                <Grid xs={12}>
+                    <Item><p className="pb-titles">pb</p> <p className="pb-text">{minTime}</p></Item>
+                </Grid>
+                <Grid xs={6}>
+                    <Item><p className="pb-titles">pb ao5</p> <p className="pb-text">{bestAo5}</p></Item>
+                </Grid>
+                <Grid xs={6}>
+                <Item><p className="pb-titles">pb a12</p> <p className="pb-text">{bestAo12}</p></Item>
+                </Grid>
+                <Grid xs={6}>
+                    <Item><p className="pb-titles">ao5</p> <p className="pb-text">{ao5}</p></Item>
+
+                </Grid>
+                <Grid xs={6}>
+                    <Item><p className="pb-titles">ao12</p> <p className="pb-text">{ao12}</p></Item>
+                </Grid>
+                <Grid xs={6}>
+                    <Item><p className="pb-titles">worst</p> <p className="pb-text">{maxTime}</p></Item>
+                </Grid>
+                <Grid xs={6}>
+                    <Item><p className="pb-titles">avg</p> <p className="pb-text">{averageTime}</p></Item>
+                </Grid>
+                <Grid xs={12}>
+                    <Item><p className="pb-titles">solves</p> <p className="pb-text">{totalCompletedSolves}</p></Item>
+                </Grid>
+            </Grid>
+
             <div className="buffer-div">
                 <button id="scramble-buttons" onClick={deleteTimes}>Clear All Times</button>
             </div>

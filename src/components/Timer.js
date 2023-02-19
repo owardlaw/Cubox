@@ -94,10 +94,6 @@ const Timer = (props) => {
             if (spacebarCount == 1) {
                 handleStart();
                 setTimerColor(green);
-            } else if (spacebarCount == 2) {
-                props.setTimes([...props.times, time]);
-                props.addTime(time);
-                handlePause();
             } else if (spacebarCount == 3) {
                 handleReset();
                 props.generateScramble(props.cube, props.setCcramble);

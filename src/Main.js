@@ -93,28 +93,37 @@ function Main() {
       <div className='header'>
         <p id="scramble">{scramble}</p>
         <CubeButtons cube={cube} setCube={setCube} generateScramble={generateScramble} setCcramble={setCcramble} deleteLastTime={deleteLastTime} />
-
       </div>
-      <div className="grid-container">
-        <div className="left-grid">
-          <Table times={times} deleteTimes={deleteTimes} />
-        </div>
-        <div className="middle-grid">
+
+      <div className='body-grid'>
+
+        <div className='timer-container'>
           <Timer cube={cube} times={times} setTimes={setTimes} setCcramble={setCcramble} generateScramble={generateScramble} addTime={addTime} />
         </div>
-        <div className="right-grid">
-          <div className='graph-cube-container'>
+
+        <div className="grid-container">
+          <div className='grid-item-table'>
+            <Table times={times} deleteTimes={deleteTimes} />
+          </div>
+
+          <div className='grid-item-chart'>
+            <div className='line-chart-container'>
+              <LineChart data={times} />
+            </div>
+          </div>
+
+
+          <div className='grid-item-scramble'>
             <scramble-display
-              id="scramble-display"
               scramble={scramble}
               event={cube}
               visualization="3D"
             ></scramble-display>
-            <div className="chart">
-              <LineChart data={times} />
-            </div>
           </div>
+
+
         </div>
+
       </div>
     </div>
   );

@@ -14,15 +14,14 @@ const Item = styled('div')(({ theme }) => ({
 }));
 
 const Table = ({ times, deleteTimes }) => {
-    let minTime = "";
-    let maxTime = "";
-    let averageTime = "";
-    let ao5 = "";
-    let ao12 = "";
+    let minTime = "--:--.--";
+    let maxTime ="--:--.--";
+    let averageTime = "--:--.--";
+    let ao5 = "--:--.--";
+    let ao12 = "--:--.--";
+    let bestAo5 = "--:--.--";
+    let bestAo12 = "--:--.--";
     let totalCompletedSolves = times.length;
-
-    const [bestAo5, setBestAo5] = React.useState(null);
-    const [bestAo12, setBestAo12] = React.useState(null);
 
     if (times.length !== 0) {
         minTime = formatTime(Math.min(...times));
@@ -39,12 +38,12 @@ const Table = ({ times, deleteTimes }) => {
         const sumWithoutMinMax = last5Solves.reduce((acc, cur) => acc + cur, 0) - minSolve - maxSolve;
         ao5 = formatTime(sumWithoutMinMax / 3);
 
-        if (bestAo5 === null) {
-            setBestAo5(ao5);
+        if (bestAo5 === "--:--.--") {
+            bestAo5 = ao5;
         } else {
 
             if (ao5 < bestAo5) {
-                setBestAo5(ao5);
+                bestAo5 = ao5;
             }
         }
     }
@@ -56,12 +55,12 @@ const Table = ({ times, deleteTimes }) => {
         const sumWithoutMinMax = last5Solves.reduce((acc, cur) => acc + cur, 0) - minSolve - maxSolve;
         ao12 = formatTime(sumWithoutMinMax / 10);
 
-        if (bestAo12 === null) {
-            setBestAo12(ao12);
+        if (bestAo12 === "--:--.--") {
+            bestAo12 = ao5;
         } else {
 
             if (ao5 < bestAo5) {
-                setBestAo12(ao12);
+                bestAo12 = ao5;
             }
         }
     }
@@ -77,51 +76,64 @@ const Table = ({ times, deleteTimes }) => {
     const amountOfTimesShown = times.length;
     const lastTenTimes = times.slice(-amountOfTimesShown).reverse();
 
+    function handlePbClear() {
+        bestAo5 = null;
+        bestAo12 = null;
+        deleteTimes();
+
+    }
+
     return (
         <div className="solve-stats">
 
-            <Grid container spacing={1} className="stats-grid">
-                <Grid xs={12}>
-                    <Item><p className="pb-titles">pb</p> <p className="pb-text">{minTime}</p></Item>
-                </Grid>
-                <Grid xs={6}>
-                    <Item><p className="pb-titles">pb ao5</p> <p className="pb-text">{bestAo5}</p></Item>
-                </Grid>
-                <Grid xs={6}>
-                <Item><p className="pb-titles">pb a12</p> <p className="pb-text">{bestAo12}</p></Item>
-                </Grid>
-                <Grid xs={6}>
-                    <Item><p className="pb-titles">ao5</p> <p className="pb-text">{ao5}</p></Item>
+            <div className="table-container">
+                <Grid container spacing={1} className="stats-grid">
+                    <Grid xs={12}>
+                        <Item className="pb-grid-item"><p className="pb-titles">pb</p> <p className="pb-text">{minTime}</p></Item>
+                    </Grid>
+                    <Grid xs={6}>
+                        <Item className="pb-grid-item"><p className="pb-titles">pb ao5</p> <p className="pb-text">{bestAo5}</p></Item>
+                    </Grid>
+                    <Grid xs={6}>
+                        <Item className="pb-grid-item"><p className="pb-titles">pb a12</p> <p className="pb-text">{bestAo12}</p></Item>
+                    </Grid>
+                    <Grid xs={6}>
+                        <Item className="pb-grid-item"><p className="pb-titles">ao5</p> <p className="pb-text">{ao5}</p></Item>
 
+                    </Grid>
+                    <Grid xs={6}>
+                        <Item className="pb-grid-item"><p className="pb-titles">ao12</p> <p className="pb-text">{ao12}</p></Item>
+                    </Grid>
+                    <Grid xs={6}>
+                        <Item className="pb-grid-item"><p className="pb-titles">worst</p> <p className="pb-text">{maxTime}</p></Item>
+                    </Grid>
+                    <Grid xs={6}>
+                        <Item className="pb-grid-item"><p className="pb-titles">avg</p> <p className="pb-text">{averageTime}</p></Item>
+                    </Grid>
+                    <Grid xs={12}>
+                        <Item ><p className="pb-titles">solves</p> <p className="pb-text">{totalCompletedSolves}</p></Item>
+                    </Grid>
                 </Grid>
-                <Grid xs={6}>
-                    <Item><p className="pb-titles">ao12</p> <p className="pb-text">{ao12}</p></Item>
-                </Grid>
-                <Grid xs={6}>
-                    <Item><p className="pb-titles">worst</p> <p className="pb-text">{maxTime}</p></Item>
-                </Grid>
-                <Grid xs={6}>
-                    <Item><p className="pb-titles">avg</p> <p className="pb-text">{averageTime}</p></Item>
-                </Grid>
-                <Grid xs={12}>
-                    <Item><p className="pb-titles">solves</p> <p className="pb-text">{totalCompletedSolves}</p></Item>
-                </Grid>
-            </Grid>
 
-            <div className="buffer-div">
-                <button id="scramble-buttons" onClick={deleteTimes}>Clear All Times</button>
-            </div>
-            <div className="scroll-table">
-                <table className="solve-stats" id="times-displayed">
-                    <tbody>
-                        {lastTenTimes.map((time, index) => (
-                            <tr id="table-font" key={index}>
-                                <td id="index-text">{totalCompletedSolves - index}</td>
-                                <td>{formatTime(time)}</td>
-                            </tr>
-                        ))}
-                    </tbody>
-                </table>
+                <div className="table-buttons">
+                    <div className="scroll-table">
+                        <table className="solve-stats" id="times-displayed">
+                            <tbody>
+                                {lastTenTimes.map((time, index) => (
+                                    <tr id="table-font" key={index}>
+                                        <td id="index-text">{totalCompletedSolves - index}</td>
+                                        <td>{formatTime(time)}</td>
+                                    </tr>
+                                ))}
+                            </tbody>
+                        </table>
+                    </div>
+
+                    <div className="buffer-div">
+                        <button id="scramble-buttons" onClick={handlePbClear}>Clear All Times</button>
+                    </div>
+                </div>
+
             </div>
         </div>
     );

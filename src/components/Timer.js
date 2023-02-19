@@ -5,11 +5,17 @@ import generateScramble from "./GenerateScramble";
 // Timer
 // Global spacebar count variable
 let spacebarCount = 0;
+let spacebarDown = 0;
+let lastPress = 0;
 
 const Timer = (props) => {
     const [isRunning, setIsRunning] = useState(false);
     const [time, setTime] = useState(0);
+    const [timerColor, setTimerColor] = useState("");
     const intervalRef = useRef();
+
+    const green = "#87ab69";
+    const red = "#f46d75";
 
     const handleStart = () => {
         if (!isRunning) {
@@ -34,21 +40,49 @@ const Timer = (props) => {
     };
 
     // Prevent spacebar from scrolling page
-    document.addEventListener("keydown", function (event) {
-        if (event.code === "Space") {
-            event.preventDefault();
+    document.body.onkeydown = function (e) {
+        e.preventDefault();
+
+
+        if (
+            e.code == "Space" && lastPress === 0
+        ) {
+            lastPress = 1;
+
+            console.log("down");
+
+            if (spacebarDown == 0) {
+                spacebarDown = 1;
+                console.log("spacebarDown = 1");
+                setTimerColor(red);
+
+            } else if (spacebarDown == 1) {
+                spacebarDown = 2;
+                console.log("spacebarDown = 2");
+                props.setTimes([...props.times, time]);
+                props.addTime(time);
+                handlePause();
+                setTimerColor("");
+
+            } else if (spacebarDown == 2) {
+                spacebarDown = 0;
+                console.log("spacebarDown = 0");
+            }
+
+            console.log(spacebarDown);
         }
-    });
+    };
 
 
     // Spacebar event listener to control timer
     document.body.onkeyup = function (e) {
         e.preventDefault();
-        if (e.key == " " ||
-            e.code == "Space" ||
-            e.keyCode == 32
+        if (e.key == " " && lastPress === 1 ||
+            e.code == "Space" && lastPress === 1 ||
+            e.keyCode == 32 && lastPress === 1
         ) {
-
+            lastPress = 0;
+            console.log("up");
             spacebarCount++;
 
             if (isRunning) {
@@ -59,15 +93,12 @@ const Timer = (props) => {
 
             if (spacebarCount == 1) {
                 handleStart();
-            }
-
-            if (spacebarCount == 2) {
+                setTimerColor(green);
+            } else if (spacebarCount == 2) {
                 props.setTimes([...props.times, time]);
                 props.addTime(time);
                 handlePause();
-            }
-
-            if (spacebarCount == 3) {
+            } else if (spacebarCount == 3) {
                 handleReset();
                 props.generateScramble(props.cube, props.setCcramble);
                 spacebarCount = 0;
@@ -78,7 +109,7 @@ const Timer = (props) => {
     return (
         <div>
             <div className="timer">
-                <p id="clock">{formatTime(time)}</p>
+                <p id="clock" style={{color: timerColor}}>{formatTime(time)}</p>
             </div>
         </div>
     );

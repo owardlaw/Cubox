@@ -29,7 +29,7 @@ const CubeButtons = (props) => {
       <button id="scramble-buttons" onClick={() => changeCube(sixBySix)}>6x6</button>
       <button id="scramble-buttons" onClick={() => changeCube(sevenBySeven)}>7x7</button>
       <button id="scramble-buttons" onClick={() => changeCube(sq1)}>Sq1</button>
-      <button id="scramble-buttons" onClick={() => changeCube(megaminx)}>Pyraminx</button>
+      <button id="scramble-buttons" onClick={() => changeCube(megaminx)}>Megaminx</button>
       <button id="scramble-buttons" onClick={() => changeCube(clock)}>Clock</button>
       <button id="scramble-buttons" onClick={() => changeCube(threeByThreeFm)}>3x3 fm</button>
       <button id="scramble-buttons" onClick={() => changeCube(threeByThreeBf)}>3x3 bf</button>

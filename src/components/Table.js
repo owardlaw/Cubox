@@ -71,9 +71,9 @@ const Table = ({ times, deleteTimes }) => {
                     </tr>
                 </thead>
             </table>
-
-            <button id="scramble-buttons" onClick={deleteTimes}>Clear All Times</button>
-
+            <div className="buffer-div">
+                <button id="scramble-buttons" onClick={deleteTimes}>Clear All Times</button>
+            </div>
             <div className="scroll-table">
                 <table className="solve-stats" id="times-displayed">
                     <tbody>

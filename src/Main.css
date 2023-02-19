@@ -103,7 +103,7 @@
 .chart {
   padding-top: 40px;
   height: 300px;
-  width: 80%;
+  width: 90%;
 }
 
 .header {
@@ -118,10 +118,10 @@
   font-weight: 600;
   padding-top: 20px;
 }
-
+/* 
 #times-displayed {
   margin-top: 20px;
-}
+} */
 
 #scramble-display {
   margin-right: auto;
@@ -132,4 +132,8 @@
   margin-top: 5px;
   color: rgb(0, 0, 0);
   background-color: rgb(207, 207, 207);
+}
+
+.buffer-div {
+  margin: 12%;
 }

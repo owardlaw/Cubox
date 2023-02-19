@@ -8,7 +8,6 @@ import generateScramble from './components/GenerateScramble';
 import { openDB } from 'idb';
 import { ScrambleDisplay } from "scramble-display"
 
-
 function Main() {
 
   const [scramble, setCcramble] = useState(null);
@@ -66,10 +65,8 @@ function Main() {
     setTimes([]);
   };
 
-
   return (
     <div className="top-container">
-
       <div className='header'>
         <p id="scramble">{scramble}</p>
         <CubeButtons setCube={setCube} generateScramble={generateScramble} setCcramble={setCcramble} />
@@ -77,16 +74,13 @@ function Main() {
           <button id="scramble-buttons" onClick={() => generateScramble(cube, setCcramble)}>Next Scramble</button>
         </div>
       </div>
-
       <div className="grid-container">
         <div className="left-grid">
           <Table times={times} deleteTimes={deleteTimes} />
         </div>
-
         <div className="middle-grid">
           <Timer cube={cube} times={times} setTimes={setTimes} setCcramble={setCcramble} generateScramble={generateScramble} addTime={addTime} />
         </div>
-
         <div className="right-grid">
           <scramble-display
             id="scramble-display"
@@ -98,7 +92,6 @@ function Main() {
             <LineChart data={times} />
           </div>
         </div>
-
       </div>
     </div>
   );

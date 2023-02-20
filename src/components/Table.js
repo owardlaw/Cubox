@@ -130,7 +130,7 @@ const Table = ({ times, deleteTimes }) => {
                     </div>
 
                     <div className="buffer-div">
-                        <button id="scramble-buttons" onClick={handlePbClear}>Clear All Times</button>
+                        <button id="scramble-buttons" onClick={handlePbClear}>Clear</button>
                     </div>
                 </div>
 

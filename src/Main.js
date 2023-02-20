@@ -91,11 +91,8 @@ function Main() {
   return (
     <div className="top-container">
       <div className='header'>
-        <p id="scramble">{scramble}</p>
-        <CubeButtons cube={cube} setCube={setCube} generateScramble={generateScramble} setCcramble={setCcramble} deleteLastTime={deleteLastTime} />
+        <CubeButtons cube={cube} setCube={setCube} generateScramble={generateScramble} setCcramble={setCcramble} deleteLastTime={deleteLastTime} scramble={scramble}/>
       </div>
-
-      <div className='body-grid'>
 
         <div className='timer-container'>
           <Timer cube={cube} times={times} setTimes={setTimes} setCcramble={setCcramble} generateScramble={generateScramble} addTime={addTime} />
@@ -123,8 +120,6 @@ function Main() {
 
 
         </div>
-
-      </div>
     </div>
   );
 }

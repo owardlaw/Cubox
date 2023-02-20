@@ -239,8 +239,7 @@ body {
   font-size: 70px;
   font-weight: 600;
   padding-top: 20px;
-  max-height: 16vh;
-  height: 17vh;
+  max-height: 50vh;
   background-color: #242726;
   color: rgb(207, 207, 207);
 }
@@ -265,6 +264,7 @@ body {
   font-size: 1.5vh;
   margin-left: 0.5vw;
   margin-right: 0.5vw;
+  margin-bottom: 1vh;
 }
 
 .buffer-div {

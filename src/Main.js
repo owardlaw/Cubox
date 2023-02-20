@@ -91,35 +91,35 @@ function Main() {
   return (
     <div className="top-container">
       <div className='header'>
-        <CubeButtons cube={cube} setCube={setCube} generateScramble={generateScramble} setCcramble={setCcramble} deleteLastTime={deleteLastTime} scramble={scramble}/>
+        <CubeButtons cube={cube} setCube={setCube} generateScramble={generateScramble} setCcramble={setCcramble} deleteLastTime={deleteLastTime} scramble={scramble} />
       </div>
 
-        <div className='timer-container'>
-          <Timer cube={cube} times={times} setTimes={setTimes} setCcramble={setCcramble} generateScramble={generateScramble} addTime={addTime} />
+      <div className='timer-container'>
+        <Timer cube={cube} times={times} setTimes={setTimes} setCcramble={setCcramble} generateScramble={generateScramble} addTime={addTime} />
+      </div>
+
+      <div className="grid-container">
+        <div className='grid-item-table'>
+          <Table times={times} deleteTimes={deleteTimes} />
         </div>
 
-        <div className="grid-container">
-          <div className='grid-item-table'>
-            <Table times={times} deleteTimes={deleteTimes} />
+        <div className='grid-item-chart'>
+          <div className='chart'>
+            <LineChart id="chart" data={times} />
           </div>
-
-          <div className='grid-item-chart'>
-            <div className='line-chart-container'>
-              <LineChart data={times} />
-            </div>
-          </div>
-
-
-          <div className='grid-item-scramble'>
-            <scramble-display
-              scramble={scramble}
-              event={cube}
-              visualization="3D"
-            ></scramble-display>
-          </div>
-
-
         </div>
+
+
+        <div className='grid-item-scramble'>
+          <scramble-display
+            scramble={scramble}
+            event={cube}
+            visualization="3D"
+          ></scramble-display>
+        </div>
+
+
+      </div>
     </div>
   );
 }

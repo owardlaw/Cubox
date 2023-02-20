@@ -87,15 +87,16 @@ const Table = ({ times, deleteTimes }) => {
         <div className="solve-stats">
 
             <div className="table-container">
+                
                 <Grid container spacing={1} className="stats-grid">
-                    <Grid xs={12}>
+                    <Grid className="grid-button" xs={12}>
                         <Item className="pb-grid-item"><p className="pb-titles">pb</p> <p className="pb-text">{minTime}</p></Item>
                     </Grid>
                     <Grid xs={6}>
                         <Item className="pb-grid-item"><p className="pb-titles">pb ao5</p> <p className="pb-text">{bestAo5}</p></Item>
                     </Grid>
                     <Grid xs={6}>
-                        <Item className="pb-grid-item"><p className="pb-titles">pb a12</p> <p className="pb-text">{bestAo12}</p></Item>
+                        <Item className="pb-grid-item"><p className="pb-titles">pb ao12</p> <p className="pb-text">{bestAo12}</p></Item>
                     </Grid>
                     <Grid xs={6}>
                         <Item className="pb-grid-item"><p className="pb-titles">ao5</p> <p className="pb-text">{ao5}</p></Item>
@@ -111,7 +112,7 @@ const Table = ({ times, deleteTimes }) => {
                         <Item className="pb-grid-item"><p className="pb-titles">avg</p> <p className="pb-text">{averageTime}</p></Item>
                     </Grid>
                     <Grid xs={12}>
-                        <Item ><p className="pb-titles">solves</p> <p className="pb-text">{totalCompletedSolves}</p></Item>
+                        <Item className="pb-grid-item"><p className="pb-titles">solves</p> <p className="pb-text">{totalCompletedSolves}</p></Item>
                     </Grid>
                 </Grid>
 

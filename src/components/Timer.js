@@ -17,6 +17,48 @@ const Timer = (props) => {
     const green = "#87ab69";
     const red = "#f46d75";
 
+    const [value, setValue] = useState('333');
+    const [fontSize, setFontSize] = useState('3vh');
+
+    const handleChange = (event) => {
+
+        setValue(event.target.value);
+        changeCube(event.target.value);
+
+        console.log(event.target.value);
+
+        if (event.target.value === "222") {
+            setFontSize('3vh');
+        } else if (event.target.value === "333") {
+            setFontSize('3vh');
+        } else if (event.target.value === "444") {
+            setFontSize('2.5vh');
+        } else if (event.target.value === "555") {
+            setFontSize('2.5vh');
+        } else if (event.target.value === "666") {
+            setFontSize('2vh');
+        } else if (event.target.value === "777") {
+            setFontSize('2vh');
+        } else if (event.target.value === "sq1") {
+            setFontSize('2.5vh');
+        } else if (event.target.value === "minx") {
+            setFontSize('2vh');
+        } else if (event.target.value === "clock") {
+            setFontSize('3vh');
+        } else if (event.target.value === "333fm") {
+            setFontSize('3vh');
+        } else if (event.target.value === "333bf") {
+            setFontSize('3vh');
+        } else if (event.target.value === "333oh") {
+            setFontSize('3vh');
+        }
+    };
+
+    function changeCube(cube) {
+        props.setCube(cube);
+        props.generateScramble(cube, props.setCcramble);
+    }
+
     const handleStart = () => {
         if (!isRunning) {
             setIsRunning(true);
@@ -90,10 +132,8 @@ const Timer = (props) => {
     };
 
     return (
-        <div>
-            <div className="timer">
-                <p id="clock" style={{color: timerColor}}>{formatTime(time)}</p>
-            </div>
+        <div className="timer">
+            <p id="clock" style={{ color: timerColor }}>{formatTime(time)}</p>
         </div>
     );
 };

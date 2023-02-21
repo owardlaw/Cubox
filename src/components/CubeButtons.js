@@ -3,7 +3,7 @@ import React, { useState } from "react";
 const CubeButtons = (props) => {
 
   const [value, setValue] = useState('333');
-  const [fontSize, setFontSize] = useState('3vh');
+  const [fontSize, setFontSize] = useState('3vw');
 
   const handleChange = (event) => {
 
@@ -13,30 +13,30 @@ const CubeButtons = (props) => {
     console.log(event.target.value);
 
     if (event.target.value === "222") {
-      setFontSize('3vh');
+      setFontSize('4vh');
     } else if (event.target.value === "333") {
-      setFontSize('3vh');
+      setFontSize('3.3vh');
     } else if (event.target.value === "444") {
-      setFontSize('2.5vh');
+      setFontSize('2.6vh');
     } else if (event.target.value === "555") {
-      setFontSize('2.5vh');
+      setFontSize('2.3vh');
     } else if (event.target.value === "666") {
       setFontSize('2vh');
     } else if (event.target.value === "777") {
-      setFontSize('2vh');
+      setFontSize('1.9vh');
     } else if (event.target.value === "sq1") {
-      setFontSize('2.5vh');
+      setFontSize('3.3vh');
     } else if (event.target.value === "minx") {
       setFontSize('2vh');
     } else if (event.target.value === "clock") {
-      setFontSize('3vh');
+      setFontSize('3.2vh');
     } else if (event.target.value === "333fm") {
       setFontSize('3vh');
     } else if (event.target.value === "333bf") {
-      setFontSize('3vh');
+      setFontSize('3.3vh');
     } else if (event.target.value === "333oh") {
-      setFontSize('3vh');
-    }     
+      setFontSize('3.3vh');
+    }
   };
 
   function changeCube(cube) {
@@ -46,7 +46,7 @@ const CubeButtons = (props) => {
 
   return (
     <div>
-      <p id="scramble" style={{fontSize: fontSize}}>{props.scramble}</p>
+      <p id="scramble" style={{ fontSize: fontSize }}>{props.scramble}</p>
       <select id="scramble-buttons" value={value} onChange={handleChange}>
         <option id="scramble-buttons" value="222">2x2</option>
         <option id="scramble-buttons" value="333">3x3</option>

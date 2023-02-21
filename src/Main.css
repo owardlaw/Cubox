@@ -1,27 +1,32 @@
-* {
+*{
   font-family: 'Courier', sans-serif;
-  font-size: 15px;
   font-weight: 600;
   color: rgb(207, 207, 207);
-  max-height: 100vh;
-  
+
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+ }
+
+html, body {
+  margin: 0;
+  padding: 0;
+  height: 100%;
 }
 
 .top-container {
   text-align: center;
   background-color: #242728;
   max-height: 100vh;
+  height: 100vh;
 }
 
 @media screen and (max-width: 1400px) {
-  
+
   .pb-titles {
     font-size: 1vw;
-    color: #666666;
-    font-weight: 600;
-    padding-right: 2%;
   }
-  
+
   .pb-text {
     font-size: 1.2vw;
     font-weight: 600;
@@ -32,11 +37,8 @@
 @media screen and (min-width: 1401px) {
   .pb-titles {
     font-size: 18px;
-    color: #666666;
-    font-weight: 600;
-    padding-right: 2%;
   }
-  
+
   .pb-text {
     font-size: 18px;
     font-weight: 600;
@@ -56,16 +58,12 @@
     grid-template-columns: 1fr 1fr !important;
     grid-template-rows: auto;
     flex: 1;
-    /* background-color: #242728; */
   }
-  
+
   .pb-titles {
     font-size: 14px;
-    color: #666666;
-    font-weight: 600;
-    padding-right: 2%;
   }
-  
+
   .pb-text {
     font-size: 14px;
     font-weight: 600;
@@ -93,15 +91,11 @@
   }
 }
 
-body {
-  background-color: #242728;
-}
-
 #table-font {
   font-size: 18px;
 }
 
-.chart{
+.chart {
   height: 80%;
   width: 80%;
 }
@@ -112,7 +106,7 @@ body {
   justify-content: center;
   text-align: center;
   background-color: #222222;
-    border-radius: 5%;;
+  border-radius: 5%;
 
 }
 
@@ -123,9 +117,9 @@ body {
 }
 
 .table-container {
-  height: 100%;
+  height: 90%;
   width: 100%;
-} 
+}
 
 .stats-grid {
   display: grid;
@@ -140,11 +134,11 @@ body {
   justify-content: center;
   align-items: center;
   max-height: 4vh;
-  background-color:  #222222 !important;
+  background-color: #505050 !important;
 }
 
 .pb-titles {
-  color: #666666;
+  color: #171717;
   font-weight: 600;
   padding-right: 2%;
 }
@@ -154,16 +148,21 @@ body {
   color: #c5c5c5;
 }
 
+.push-bottom {
+  display: flex;
+  flex-direction: column;
+  align-items: end;
+  justify-content: space-between;
+}
+
 .grid-container {
   display: grid;
   grid-template-columns: 1.5fr 1fr 1fr;
   grid-template-rows: auto;
   flex: 1;
-  max-height: 10vh;
-  height: 10vh;
+  max-height: 50vh;
   gap: 1em;
-  padding: 1vw;
-}
+} 
 
 .table-buttons {
   width: 100%;
@@ -171,12 +170,19 @@ body {
 
 .timer-container {
   background-color: #242728;
-  max-height: 30vh;
-  height: 30vh;
+  max-height: 25vh;
+  height: 25vh;
   display: flex;
   align-items: center;
   justify-content: center;
   text-align: center;
+}
+
+.timer {
+  display: flex;
+  justify-content: center; /* horizontally center the content */
+  align-items: center; /* vertically center the content */
+  height: 100%;
 }
 
 .chart-container {
@@ -184,22 +190,22 @@ body {
   Width: 90%;
 }
 
-#chart {
-  height: 100%;
-  width: 100%;
-}
-
 .table-container {
   display: flex;
   flex-direction: row;
 }
 
+.grid-item-table {
+  border-radius: 5%;
+  background-color: #222222;
+  height: 100%;
+}
+
 .solve-stats {
-  padding: 10px;
+  padding: 1vh;
   width: auto;
   height: auto;
   text-align: center;
-  background-color: #242728;
   justify-content: center;
   align-items: center;
   margin-left: auto;
@@ -207,7 +213,6 @@ body {
 }
 
 .scroll-table {
-  background-color: #242728;
   padding-top: 20px;
   overflow-x: hidden;
   overflow-y: auto;
@@ -243,22 +248,24 @@ body {
 }
 
 #clock {
-  font-size: 6vw;
+  font-size: min(6vw, 6vh);
   text-align: center;
 }
 
 .header {
   text-align: center;
-  font-size: 70px;
   font-weight: 600;
-  padding-top: 20px;
-  max-height: 50vh;
+  max-height: 25vh;
+  height: 25vh;
+  /* height: fit-content; */
   background-color: #242728;
   color: rgb(207, 207, 207);
+  /* border: 3px solid #eee; */
 }
 
 #scramble {
   font-weight: 600;
+  margin-bottom: 1vh;
 }
 
 #scramble-buttons {
@@ -269,7 +276,6 @@ body {
   font-size: 1.5vh;
   margin-left: 0.5vw;
   margin-right: 0.5vw;
-  margin-bottom: 1vh;
 }
 
 .buffer-div {
@@ -281,6 +287,6 @@ scramble-display {
   height: 100%;
   overflow: hidden;
   background-color: #222222;
-    border-radius: 5%;;
+  border-radius: 5%;
 
 }

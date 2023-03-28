@@ -102,7 +102,6 @@ function Main() {
       </div>
 
       {/* Cont 3 */}
-      <div className='push-bottom'>
         <div className="grid-container">
           <div className='grid-item-table'>
             <Table times={times} deleteTimes={deleteTimes} />
@@ -118,9 +117,9 @@ function Main() {
               event={cube}
               visualization="3D"
             ></scramble-display>
-          </div>
         </div>
       </div>
+
     </div>
   );
 }

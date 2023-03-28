@@ -4,7 +4,7 @@ const formatTime = (unixTime) => {
     const minutes = date.getUTCMinutes().toString().padStart(2, '0');
     const seconds = date.getUTCSeconds().toString().padStart(2, '0');
     const milliseconds = date.getUTCMilliseconds().toString().padStart(3, '0');
-    return `${minutes}:${seconds}.${milliseconds}`;
+    return `${seconds}.${milliseconds}`;
 };
 
 export default formatTime;

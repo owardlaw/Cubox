@@ -14,13 +14,13 @@ const Item = styled('div')(({ theme }) => ({
 }));
 
 const Table = ({ times, deleteTimes }) => {
-    let minTime = "--:--.--";
-    let maxTime ="--:--.--";
-    let averageTime = "--:--.--";
-    let ao5 = "--:--.--";
-    let ao12 = "--:--.--";
-    let bestAo5 = "--:--.--";
-    let bestAo12 = "--:--.--";
+    let minTime = "--.---";
+    let maxTime ="--.---";
+    let averageTime = "--.---";
+    let ao5 = "--.---";
+    let ao12 ="--.---";
+    let bestAo5 = "--.---";
+    let bestAo12 = "--.---";
     let totalCompletedSolves = times.length;
 
     if (times.length !== 0) {

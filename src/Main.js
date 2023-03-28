@@ -119,7 +119,6 @@ function Main() {
             ></scramble-display>
         </div>
       </div>
-
     </div>
   );
 }
